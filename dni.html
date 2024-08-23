@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNI Digital Header</title>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+</head>
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        overflow: hidden;
+        touch-action: none;
+    }
+    .header {
+        display: flex;
+        align-items: center;
+        background-color: #337ab7;
+        padding: 10px;
+        color: white;
+        justify-content: space-between;
+        height: 40px;
+        border-bottom-left-radius: 13px;
+        border-bottom-right-radius: 13px;
+    }
+    .icon {
+        font-size: 24px;
+    }
+    .title {
+        font-size: 20px;
+        flex-grow: 1;
+        text-align: center;
+    }
+    .icon-img {
+        width: 45px;
+        height: 45px;
+    }
+    .card {
+        background-color: white;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        width: 340px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+    .card-image img {
+        width: 100%;
+        border-radius: 10px;
+    }
+    .card-details {
+        margin-top: 20px;
+        text-align: center;
+    }
+    .card-details p {
+        color: #666;
+        font-size: 14px;
+        margin-bottom: 20px;
+    }
+    .card-actions {
+        display: flex;
+        justify-content: space-around;
+        border-top: 1px solid #eee;
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+    .action {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        margin: 10px 0;
+    }
+    .action-icon {
+        width: 24px;
+        height: 24px;
+        margin-right: 5px;
+    }
+    .footer {
+        background-color: white;
+        padding: 10px 0px;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        border-top: 1px solid #ccc;
+    }
+    .footer img {
+        width: 40px;
+        height: 40px;
+    }
+    .loader {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #337ab7;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+        margin-top: 100px;
+    }
+    @keyframes rotation {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    } 
+</style>
+<body>
+    <header class="header">
+        <span onclick="atras()" class="icon">&larr;</span>
+        <span class="title">DNI Digital</span>
+        <img src="img/refresh.png" alt="Refresh" class="icon-img">
+    </header>
+    <div id="cardEntera" style="display: none;">
+        <center style="padding-top: 20px;">
+            <div class="card" onclick="pagar()" id="pagar" style="background-color: rgba(255, 0, 0, 0.5);">
+                <div class="card-image">
+                    <p id="nombre" style="margin-top: 0px;margin-bottom: 10px; font-weight: bold;text-align: left;"></p>
+                    <section class="u-clearfix Bu-section-2" id="sec-8eb5">
+                        <div class="u-clearfix u-sheet Bu-sheet-1">
+                            <div class="tarjeta">
+                                <img id="imagen1" class="u-image u-image-default Bu-image-1 dni-image" src="" data-image-width="900" data-image-height="578" onclick="cambiarImagen()">
+                                <img id="imagen2" class="u-image u-image-default Bu-image-1 dni-image" src="dni3602/2.jpg" data-image-width="490" data-image-height="312" style="display: none;">
+                                <img id="imagen3" class="u-image u-image-default Bu-image-1 dni-image" src="dni3602/3.jpg" data-image-width="490" data-image-height="312" style="display: none;">
+                                <img id="imagen4" class="u-image u-image-default Bu-image-1 dni-image" src="dni3602/4.jpg" data-image-width="490" data-image-height="312" style="display: none;">
+                                <img id="imagen5" class="u-image u-image-default Bu-image-1 dni-image" src="dni3602/5.jpg" data-image-width="490" data-image-height="312" style="display: none;">
+                                <img id="imagen6" class="u-image u-image-default Bu-image-1 dni-image" src="dni3602/6.jpg" data-image-width="490" data-image-height="312" style="display: none;">
+                                <img id="imagen7" class="u-image u-image-default Bu-image-1 dni-image" src="dni3602/7.jpg" data-image-width="490" data-image-height="312" style="display: none;">
+                                <img id="imagen8" class="u-image u-image-default Bu-image-1 dni-image" src="dni3602/8.jpg" data-image-width="490" data-image-height="312" style="display: none;">
+                                <img id="imagen9" class="u-image u-image-default Bu-image-1 dni-image" src="dni3602/9.jpg" data-image-width="490" data-image-height="312" style="display: none;">
+                                <img id="imagen10" class="u-image u-image-default Bu-image-1 dni-image" src="" data-image-width="490" data-image-height="312" style="display: none;" onclick="cambiarImagen2()">
+                            </div>
+                            <img class="u-image u-image-contain u-image-default Bu-image-2" src="images/detallesdni.PNG" alt="" data-image-width="314" data-image-height="99">
+                        </div>
+                    </section>
+                </div>
+                <div class="card-details">
+                    <p id="update-time">Última actualización: --/--/---- --:--:-- hs</p>
+                    <div class="card-actions">
+                        <div class="action">
+                            <img src="img/ver.PNG" alt="Ver detalle" class="action-icon">
+                            <span onclick="verDetalles()">Ver detalle</span>
+                        </div>
+                        <div class="action">
+                            <img src="img/cruz.PNG" alt="Desactivar DNI" class="action-icon">
+                            <span>Desactivar DNI</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <div class="action">
+                            <img src="img/qr.PNG" alt="Verifica código QR" class="action-icon">
+                            <span>Verifica código QR</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </center>
+    </div>
+    <center><span id="loader" class="loader"></span></center>
+    <div class="footer">
+        <img src="img/inicio.PNG" alt="Inicio">
+        <img style="width: 60px; height: 43px;" src="img/novedades.PNG" alt="Novedades">
+        <img style="width: 50px;" src="img/telefonos.PNG" alt="Teléfonos">
+        <img src="img/tina.PNG" alt="Tina">
+    </div>
+
+    <script>
+        function verDetalles() {
+            window.location.href = "dniDetalles.html";
+        }
+        function atras() {
+            window.location.href = "verDni.html";
+        }
+        document.addEventListener('DOMContentLoaded', () => {
+            const updateTimeElement = document.getElementById('update-time');
+            const now = new Date();
+            const day = String(now.getDate()).padStart(2, '0');
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const year = now.getFullYear();
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            const formattedDateTime = `${day}/${month}/${year} ${hours}:${minutes}:${seconds} hs`;
+            updateTimeElement.textContent = `Última actualización: ${formattedDateTime}`;
+            setTimeout(() => {
+                document.getElementById("cardEntera").style.display = "block";
+                document.getElementById("loader").style.display = "none";
+            }, 4000); // Simulación de tiempo de carga
+        });
+    </script>
+</body>
+</html>
